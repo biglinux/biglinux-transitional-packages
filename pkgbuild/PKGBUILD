@@ -1,0 +1,31 @@
+# Maintainer: Bruno Gonçalves <bigbruno@gmail.com>
+# Maintainer: Tales A. Mendonça <talesam@gmail.com>
+
+# Empty transitional packages. A package that only disappears from the
+# repository stays installed forever on systems that are never reinstalled;
+# publishing an empty, newer version removes its files on the next upgrade and,
+# when something else took its place, pulls that in through depends.
+#
+# To retire another package: add its name to pkgname and a package_<name>()
+# function below.
+pkgbase=biglinux-transitional-packages
+pkgname=(stadia-controller-udev openrgb-udev-rules)
+pkgver=$(date +%y.%m.%d)
+pkgrel=$(date +%H%M)
+arch=('any')
+license=('GPL-3.0-or-later')
+url="https://github.com/biglinux/${pkgbase}"
+source=("git+${url}.git")
+sha256sums=('SKIP')
+
+# Google Stadia ended in January 2023; the rules (world-writable HID access for
+# whole vendors) served only its Bluetooth-mode flashing tool, now offline.
+package_stadia-controller-udev() {
+    pkgdesc="Empty transitional package: the Stadia controller rules were retired (safe to uninstall)"
+}
+
+# Manjaro's openrgb ships the same /usr/lib/udev/rules.d/60-openrgb.rules.
+package_openrgb-udev-rules() {
+    pkgdesc="Empty transitional package: the OpenRGB udev rules now come with openrgb (safe to uninstall)"
+    depends=('openrgb')
+}
